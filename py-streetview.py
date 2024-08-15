@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
         layout.addWidget(self.webview)
         
-        central_widget = QWidget = QWidget()
+        central_widget = QWidget()
         central_widget.setLayout(layout)
         self.CentralWidget(central_widget)
 
