@@ -40,7 +40,7 @@ def run():
         return render_template("index.html")
     app.run(debug=True)
 
-class MainWindow:
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         
