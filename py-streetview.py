@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         
         self.setWindowTitle("PyStreetView")
-        self.setGeometry(600, 480)
+        self.setGeometry(100, 100, 600, 480)
         
         # Create a webview
         self.webview = QWebEngineView()
