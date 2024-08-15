@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
         
         central_widget = QWidget()
         central_widget.setLayout(layout)
-        self.CentralWidget(central_widget)
+        self.centralWidget(central_widget)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
