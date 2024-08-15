@@ -1,4 +1,4 @@
-import pywebview
+import webview
 from flask import Flask, render_template, request, jsonify
 import geocoder
 import google_streetview
@@ -36,8 +36,8 @@ def index():
     return render_template("index.html")
 
 def start_app():
-    pywebview.create_window("Street View Viewer", app)
-    pywebview.start
+    webview.create_window("Street View Viewer", app)
+    webview.start
     
 if __name__ == "__main__":
     start_app()
