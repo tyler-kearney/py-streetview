@@ -1,7 +1,5 @@
 import sys
-from PyQt6.QtCore import QUrl
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
-from PyQt6.QtWebEngineWidgets import QWebEngineView
+import webview
 from flask import Flask, render_template, request, jsonify
 import geocoder
 import google_streetview
@@ -30,38 +28,17 @@ def streetview_data(address):
     else:
         return None
 
-def run():
-    @app.route('/', methods=["GET", "POST"])
-    def index():
-        if request.method == "POST":
-            address = request.json("address")
-            image_fn = streetview_data(address)
-            return render_template("index.html", images=image_fn)
-        return render_template("index.html")
+@app.route('/', methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        address = request.json("address")
+        image_fn = streetview_data(address)
+        return render_template("index.html", images=image_fn)
+    return render_template("index.html")
+
+def start_app():
     app.run(debug=True)
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        
-        self.setWindowTitle("PyStreetView")
-        self.setGeometry(100, 100, 600, 480)
-        
-        # Create a webview
-        self.webview = QWebEngineView()
-        self.webview.setUrl(QUrl("http://127.0.0.1:5000"))
-        
-        # Create a layout
-        layout = QVBoxLayout()
-        layout.addWidget(self.webview)
-        
-        central_widget = QWidget()
-        central_widget.setLayout(layout)
-        self.centralWidget(central_widget)
-
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    
-    window=MainWindow()
-    window.show()
-    sys.exit(app.exec())
+    webview.create_window("PyStreetView", "http://127.0.0.1:5000")
+    webview.start(start_app)
