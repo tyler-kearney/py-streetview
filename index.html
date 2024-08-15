@@ -7,6 +7,38 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form id="address-form" method="post">
+        <input type="text" id="address" placeholder="Enter Address" />
+        <button typer="submit">Load</button>
+    </form>
+    <div id="streetview"></div>
+    <script>
+        const addressForm = document.getElementById("address-form");
+        addressForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+            const address = document.getElementById("address").value;
+            // Send to the flask backend
+            fetch("/get_street_view", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ address: address })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const streetViewDiv = document.getElementById("streetview");
+                streetViewDiv.innerHTML = '';
+                data.images.forEach(imageUrl => {
+                    const img = document.createElement("img");
+                    img.src = imageUrl;
+                    streetViewDiv.appendChild(img);
+                });
+            })
+            .catch(error => {
+                console.error("Error: ", error);
+            });
+        });
+    </script>
 </body>
 </html>
